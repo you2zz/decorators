@@ -1,16 +1,16 @@
-# This is a sample Python script.
-
-# Press Shift+F10 to execute it or replace it with your code.
-# Press Double Shift to search everywhere for classes, files, tool windows, actions, and settings.
+import requests
+from tools import speed_check, printable, cached
 
 
-def print_hi(name):
-    # Use a breakpoint in the code line below to debug your script.
-    print(f'Hi, {name}')  # Press Ctrl+F8 to toggle the breakpoint.
+cached_100 = cached(max_size=100)
+@speed_check
+# @cached(max_size=100)
 
+@cached_100
+def get_swapi_person(person_id):
+    return requests.get(f'https://swapi.py4e.com/api/people/{person_id}').json()
 
-# Press the green button in the gutter to run the script.
-if __name__ == '__main__':
-    print_hi('PyCharm')
+get_swapi_person(4)
 
-# See PyCharm help at https://www.jetbrains.com/help/pycharm/
+get_swapi_person(4)
+
