@@ -1,17 +1,15 @@
-#Доработать декоратор logger в коде ниже. Должен получиться декоратор,
-# который записывает в файл 'main.log' дату и время вызова функции,
-# имя функции, аргументы, с которыми вызвалась, и возвращаемое значение.
-# Функция test_1 в коде ниже также должна отработать без ошибок.
-
 import os
-
+from functools import wraps
+import logging
+import datetime
 
 def logger(old_function):
-    ...
-
+    @wraps(old_function)
     def new_function(*args, **kwargs):
-
+        logging.basicConfig(filename="main.log", filemode="w", level=logging.INFO, format="%(message)s")
+        call_time = datetime.datetime.now()
         result = old_function(*args, **kwargs)
+        logging.info(f'call time: {call_time}; function name: {new_function.__name__}, with arguments: {args} and {kwargs}, returned: {result}')
         return result
 
     return new_function
