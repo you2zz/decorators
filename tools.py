@@ -37,7 +37,7 @@ def cached(max_size):
             key = f'{args}{kwargs}'
             if key in cache:
                 return cache[key]
-            result = any_function(*args, **kwargs)
+
             if len(cache) >= max_size:
                 cache.popitem()
             cache[key] = result
@@ -52,7 +52,14 @@ def with_attempts(max_attempts=3, timeout=0.1):
 
         def new_function(*args, **kwargs):
             error = None
-             
+            for i in range(1, max_attempts + 1):
+                try:
+                    result = any_function(*args, **kwargs)
+                    error = None
+                    break
+                except Exception as err:
+                    error = err
+                    time.sleep(timeout)
             if error is not None:
                 raise error
             return result
