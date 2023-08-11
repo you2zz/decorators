@@ -6,10 +6,10 @@ import datetime
 def logger(old_function):
     @wraps(old_function)
     def new_function(*args, **kwargs):
-        logging.basicConfig(filename="main.log", filemode="w", level=logging.INFO, format="%(message)s")
+        logging.basicConfig(filename="main.log", filemode="a", level=logging.INFO, format="%(message)s", encoding='utf-8')
         call_time = datetime.datetime.now()
         result = old_function(*args, **kwargs)
-        logging.info(f'call time: {call_time}; function name: {new_function.__name__}, with arguments: {args} and {kwargs}, returned: {result}')
+        logging.info(f'call time: {call_time}; function name: {new_function.__name__}; with arguments: {args} and {kwargs}; returned: {result}')
         return result
 
     return new_function
