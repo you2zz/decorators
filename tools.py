@@ -49,7 +49,7 @@ def cached(max_size):
 
 def with_attempts(max_attempts=3, timeout=0.1):
     def _with_attempts(any_function):
-        @wraps(any_function
+        @wraps(any_function)
         def new_function(*args, **kwargs):
             error = None
             for i in range(1, max_attempts + 1):
